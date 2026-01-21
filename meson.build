@@ -1,6 +1,7 @@
 project('anthy-unicode',
   ['c'],
-  version: '1.0.0.20240207',
+  version: '1.0.0.@0@'.format(run_command('date', '+%Y%m%d',
+                                          check: true).stdout().strip()),
   license: 'LGPL2.1+',
   meson_version: '>= 0.59',
 )
@@ -8,22 +9,27 @@ project('anthy-unicode',
 cc = meson.get_compiler('c')
 
 config_h = configuration_data()
-config_h.set('VERSION', '"'+meson.project_version()+'"')
-config_h.set('PACKAGE', '"'+meson.project_name()+'"')
+config_h.set('PACKAGE', '"@0@"'.format(meson.project_name()))
+config_h.set('VERSION', '"@0@"'.format(meson.project_version()))
 
 foreach a : ['strerror_r']
   if cc.has_function(a)
-    config_h.set('HAVE_'+a.to_upper(), 1,
-      description: 'Define to 1 if you have the `'+a+'\' function.')
+    config_h.set('HAVE_@0@'.format(a.to_upper()), 1,
+                 description:
+                   'Define to 1 if you have the `@0@\' function.'.format(a))
   endif
 endforeach
 
 configure_file(output: 'config.h', configuration: config_h)
-add_project_arguments('-DCONF_DIR="'+get_option('sysconfdir')+'"', language : 'c')
+add_project_arguments(
+  '-DCONF_DIR="@0@"'.format(get_option('sysconfdir')),
+  language : 'c'
+)
 
 if get_option('emacs').allowed()
   if get_option('emacs_path') != ''
-    emacs = find_program(get_option('emacs_path'), required: get_option('emacs').enabled())
+    emacs = find_program(get_option('emacs_path'),
+                         required: get_option('emacs').enabled())
   else
     emacs = find_program('emacs', required: get_option('emacs').enabled())
   endif
@@ -77,9 +83,9 @@ subdir('test')
 #subdir('alt-cannadic')
 
 anthy_conf = configuration_data()
-anthy_conf.set('VERSION', meson.project_version())
 anthy_conf.set('PACKAGE', meson.project_name())
-anthy_conf.set('datadir', '${prefix}' / get_option('datadir'))
+anthy_conf.set('VERSION', meson.project_version())
+anthy_conf.set('datadir', get_option('prefix') / get_option('datadir'))
 anthy_conf.set('prefix', get_option('prefix'))
 configure_file(
   input: 'anthy-unicode.conf.in',
@@ -90,11 +96,11 @@ configure_file(
 )
 
 anthy_unicode_pc = configuration_data()
+anthy_unicode_pc.set('PACKAGE', meson.project_name())
+anthy_unicode_pc.set('VERSION', meson.project_version())
 anthy_unicode_pc.set('prefix', get_option('prefix'))
 anthy_unicode_pc.set('includedir', '${prefix}' / get_option('includedir'))
 anthy_unicode_pc.set('libdir', '${exec_prefix}' / get_option('libdir'))
-anthy_unicode_pc.set('PACKAGE', meson.project_name())
-anthy_unicode_pc.set('VERSION', meson.project_version())
 configure_file(
   input: 'anthy-unicode.pc.in',
   output: 'anthy-unicode.pc',

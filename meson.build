@@ -108,3 +108,5 @@ configure_file(
   install: true,
   install_dir: get_option('libdir') / 'pkgconfig'
 )
+
+meson.add_dist_script('meson_dist.py')

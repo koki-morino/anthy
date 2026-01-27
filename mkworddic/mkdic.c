@@ -60,8 +60,6 @@
 
 #define DEFAULT_FN "anthy.wdic"
 
-static const char *progname;
-
 /* writewords.cからアクセスするために、global変数 */
 FILE *yomi_entry_index_out, *yomi_entry_out;
 FILE *page_out, *page_index_out;
@@ -127,8 +125,7 @@ open_output_files(void)
     }
     /**/
     if (!(*(fs->fpp))) {
-      fprintf (stderr, "%s: cannot open temporary file: %s\n",
-               progname, strerror (errno));
+      fprintf (stderr, "cannot open temporary file: %s\n", strerror (errno));
       exit (2);
     }
   }
@@ -142,13 +139,13 @@ flush_output_files (void)
   struct file_section *fs;
   for (fs = file_array; fs->fpp; fs ++) {
     if (ferror(*(fs->fpp))) {
-      fprintf (stderr, "%s: write error\n", progname);
+      fprintf (stderr, "write error\n");
       exit (1);
     }
   }
   for (fs = file_array; fs->fpp; fs ++) {
     if (fflush(*(fs->fpp))) {
-      fprintf (stderr, "%s: write error: %s\n", progname, strerror (errno));
+      fprintf (stderr, "write error: %s\n", strerror (errno));
       exit (1);
     }
   }
@@ -793,8 +790,8 @@ copy_file(struct mkdic_stat *mds, FILE *in, FILE *out)
   while ((nread = fread (buf, 1, sizeof buf, in)) > 0) {
     if (fwrite (buf, 1, nread, out) < nread) {
       /* Handle short write (maybe disk full).  */
-      fprintf (stderr, "%s: %s: write error: %s\n",
-	       progname, mds->output_fn, strerror (errno));
+      fprintf (stderr, "%s: write error: %s\n",
+	       mds->output_fn, strerror (errno));
       exit (1);
     }
   }
@@ -839,8 +836,8 @@ link_dics(struct mkdic_stat *mds)
 
   fp = fopen (mds->output_fn, "w");
   if (!fp) {
-      fprintf (stderr, "%s: %s: cannot create: %s\n",
-	       progname, mds->output_fn, strerror (errno));
+      fprintf (stderr, "%s: cannot create: %s\n",
+	       mds->output_fn, strerror (errno));
       exit (1);
   }
 
@@ -856,8 +853,8 @@ link_dics(struct mkdic_stat *mds)
   }
 
   if (fclose (fp)) {
-    fprintf (stderr, "%s: %s: write error: %s\n",
-	     progname, mds->output_fn, strerror (errno));
+    fprintf (stderr, "%s: write error: %s\n",
+	     mds->output_fn, strerror (errno));
     exit (1);
   }
 }

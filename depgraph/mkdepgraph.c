@@ -39,6 +39,10 @@
 #include <anthy/depgraph.h>
 #include <anthy/diclib.h>
 
+#ifndef BLDDIR
+#define BLDDIR "."
+#endif
+
 #ifndef SRCDIR
 #define SRCDIR "."
 #endif
@@ -482,7 +486,7 @@ main(int argc, char **argv)
   int i;
   const char *out_fn = "anthy.dep";
   /* 付属語辞書を読み込んでファイルに書き出す */
-  anthy_conf_override("CONFFILE", "../anthy-unicode.conf");
+  anthy_conf_override("CONFFILE", BLDDIR "/../anthy-unicode.conf");
   anthy_conf_override("ANTHYDIR", SRCDIR "/../depgraph/");
 
   anthy_init_wtypes();

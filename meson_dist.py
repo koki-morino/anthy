@@ -78,7 +78,7 @@ if ANTHY_PREV_VERSION == None:
 subprocess.run('git log --name-status --date=iso > "{0}/{1}"'.format(
                DIST_ROOT, 'ChangeLog'),
                shell = True)
-subprocess.run('echo "Changes in {0} {1} " > "{2}/{3}"'.format(
+subprocess.run('echo "Changes in {0} {1}" > "{2}/{3}"'.format(
                name_str, version_str,
                DIST_ROOT, 'NEWS'),
                shell = True)

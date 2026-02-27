@@ -5,8 +5,8 @@ libanthy_sources = [
 
 libanthy_unicode = library('anthy-unicode',
   sources: libanthy_sources,
-  include_directories: [top_srcdir],
-  dependencies: [anthydic_dep, ordering_dep, split_dep],
+  include_directories: [top_srcdir, win32dir],
+  dependencies: [ordering_dep, split_dep, anthydic_dep],
   version: '0.1.0',
   install: true,
 )

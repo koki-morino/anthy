@@ -106,6 +106,11 @@ open_output_files(void)
 {
   struct file_section *fs;
   char *tmpdir = getenv("TMPDIR");
+#ifdef _WIN32
+ /* TMPDIR on Windows */
+  if (!tmpdir) tmpdir = getenv("TEMP");
+  if (!tmpdir) tmpdir = getenv("TMP");
+#endif
   tmpdir = tmpdir ? strdup (tmpdir) : strdup ("/tmp");
   for (fs = file_array; fs->fpp; fs ++) {
     char buf[256];
@@ -120,7 +125,7 @@ open_output_files(void)
     if (fd == -1) {
       *(fs->fpp) = NULL;
     } else {
-      *(fs->fpp) = fdopen(fd, "w+");
+      *(fs->fpp) = fdopen(fd, "w+b");
       fs->fn = strdup(buf);
     }
     /**/
@@ -834,7 +839,7 @@ link_dics(struct mkdic_stat *mds)
   FILE *fp;
   struct file_section *fs;
 
-  fp = fopen (mds->output_fn, "w");
+  fp = fopen (mds->output_fn, "wb");
   if (!fp) {
       fprintf (stderr, "%s: cannot create: %s\n",
 	       mds->output_fn, strerror (errno));

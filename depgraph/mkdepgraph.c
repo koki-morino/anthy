@@ -453,7 +453,7 @@ static void
 write_file(const char* file_name)
 {
   int i;
-  FILE* fp = fopen(file_name, "w");
+  FILE* fp = fopen(file_name, "wb");
   int* node_offset = malloc(sizeof(int) * nrNodes); /* gNodesのファイル上の位置 */
 
   if (!fp) {

@@ -16,7 +16,7 @@ libanthydic_sources = [
 
 libanthydic_unicode = library('anthydic-unicode',
   sources: libanthydic_sources,
-  include_directories: [top_srcdir],
+  include_directories: [top_srcdir, win32dir],
   dependencies: [diclib_dep],
   version: '0.1.0',
   install: true,

@@ -66,6 +66,17 @@ else
   lispdir = get_option('lisp_dir')
 endif
 
+ws2_dep = dependency('', required: false)
+win32dir = include_directories('.')
+if host_machine.system() == 'windows'
+  ws2_dep = cc.find_library('ws2_32', required: true)
+  win32dir = include_directories('src-win32')
+
+  # we need roughly 2 MB of stack for the variable in mkworddic/mkdic.c:
+  # struct mkdic_stat mds;
+  add_project_link_arguments('-Wl,--stack,4194304', language: 'c')
+endif
+
 top_srcdir = include_directories('.')
 subdir('src-ordering')
 subdir('src-diclib')

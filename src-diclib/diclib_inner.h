@@ -3,7 +3,11 @@
 
 
 #define ANTHY_DIR_SEPARATOR '/'
+#ifdef _WIN32
+#define ANTHY_IS_DIR_SEPARATOR(c) ((c) == '/' || (c) == '\\')
+#else
 #define ANTHY_IS_DIR_SEPARATOR(c) ((c) == ANTHY_DIR_SEPARATOR)
+#endif
 
 typedef enum
 {

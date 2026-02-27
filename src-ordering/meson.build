@@ -9,7 +9,7 @@ libordering_sources = [
 
 libordering = static_library('ordering',
   sources: libordering_sources,
-  include_directories: [top_srcdir],
+  include_directories: [top_srcdir, win32dir],
 )
 
-ordering_dep = declare_dependency(link_with: libordering)
+ordering_dep = declare_dependency(link_with: libordering, dependencies: [ws2_dep])

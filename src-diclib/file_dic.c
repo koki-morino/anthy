@@ -96,6 +96,14 @@ anthy_path_is_absolute (const char *file_name)
   if (ANTHY_IS_DIR_SEPARATOR (file_name[0]))
     return TRUE;
 
+#ifdef _WIN32
+  /* Drive letter like C:\ or C:/ indicates an absolute path */
+  if (((file_name[0] >= 'A' && file_name[0] <= 'Z') ||
+       (file_name[0] >= 'a' && file_name[0] <= 'z')) &&
+      file_name[1] == ':' && ANTHY_IS_DIR_SEPARATOR(file_name[2]))
+    return TRUE;
+#endif
+
   return FALSE;
 }
 
@@ -114,6 +122,16 @@ anthy_path_skip_root (const char *file_name)
         file_name++;
       return file_name;
     }
+
+#ifdef _WIN32
+  /* Skip drive root e.g. C:/ or C:\ */
+  if (((file_name[0] >= 'A' && file_name[0] <= 'Z') ||
+       (file_name[0] >= 'a' && file_name[0] <= 'z')) &&
+      file_name[1] == ':' && ANTHY_IS_DIR_SEPARATOR(file_name[2])) {
+    return file_name + 3;
+  }
+#endif
+
   return NULL;
 }
 

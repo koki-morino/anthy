@@ -61,6 +61,9 @@ anthy_mmap(const char *fn, int wr)
     flags = O_RDONLY;
     mode = S_IRUSR;
   }
+#ifdef _WIN32
+  flags |= O_BINARY;
+#endif
 
   fd = open(fn, flags, mode);
 

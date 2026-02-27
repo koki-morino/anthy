@@ -44,8 +44,8 @@ anthy_dic_tool = executable('anthy-dic-tool-unicode',
 
 anthy_agent = executable('anthy-agent-unicode',
   sources: anthy_agent_sources,
-  include_directories: [top_srcdir],
-  dependencies: [anthyinput_dep, anthy_dep, anthydic_dep],
+  include_directories: [top_srcdir, win32dir],
+  dependencies: [anthyinput_dep, anthy_dep, anthydic_dep, ws2_dep],
   install: true,
 )
 

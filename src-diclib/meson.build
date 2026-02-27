@@ -12,7 +12,7 @@ libdiclib_sources = [
 
 libdiclib = static_library('diclib',
   sources: libdiclib_sources,
-  include_directories: [top_srcdir],
+  include_directories: [top_srcdir, win32dir],
 )
 
-diclib_dep = declare_dependency(link_with: libdiclib)
+diclib_dep = declare_dependency(link_with: libdiclib, dependencies: [ws2_dep])

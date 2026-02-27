@@ -1,0 +1,24 @@
+BasedOnStyle: LLVM
+
+AlignConsecutiveMacros: true
+AlignTrailingComments: true
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterDefinitionReturnType: All
+AlignConsecutiveAssignments: Consecutive
+BraceWrapping:
+  AfterEnum: false
+  AfterFunction: true
+  AfterStruct: false
+  AfterUnion: false
+BreakBeforeBraces: Custom
+ColumnLimit: 0
+DerivePointerAlignment: true
+IndentWidth: 2
+MaxEmptyLinesToKeep: 2
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: 2
+TabWidth: 2
+UseTab: Never

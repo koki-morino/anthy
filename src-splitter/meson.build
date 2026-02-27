@@ -11,8 +11,8 @@ libsplit_sources = [
 
 libsplit = static_library('split',
   sources: libsplit_sources,
-  include_directories: [top_srcdir],
-  dependencies: [diclib_dep, cc.find_library('m', required: false)]
+  include_directories: [top_srcdir, win32dir],
+  dependencies: [cc.find_library('m', required: false)]
 )
 
 split_dep = declare_dependency(link_with: libsplit)

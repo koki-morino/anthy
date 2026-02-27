@@ -406,7 +406,7 @@ convert_file(FILE       *ifp,
         abort();
       }
       sprintf(fn, "%s/%s", output_dir, file_name);
-      ofp = fopen(fn, "w");
+      ofp = fopen(fn, "wb");
       if (!ofp) {
 	fprintf(stderr, "failed to open (%s)\n", fn);
 	abort();

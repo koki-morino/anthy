@@ -26,6 +26,12 @@ test_matrix = executable('test-matrix',
   c_args: ['-DSRCDIR="'+meson.current_source_dir()+'"', '-DTEST_HOME="'+meson.current_build_dir()+'"'],
 )
 
+cli = executable('cli',
+  sources: 'cli.c',
+  include_directories: [top_srcdir],
+  dependencies: [anthy_dep, anthydic_dep],
+)
+
 test('Main anthy tests', anthy, args: ['--all'])
 test('Library load tests', checklib)
 test('Anthy prediction tests', prediction)
